@@ -1,3 +1,5 @@
+import { AppProduct } from './../../../models/app-product';
+import { map } from 'rxjs/operators';
 import { ProductService } from "./../../../services/product.service";
 import { Component, OnInit } from "@angular/core";
 
@@ -10,7 +12,17 @@ export class AdminProductsComponent implements OnInit {
   products$;
 
   constructor(private productService: ProductService) {
-    this.products$ = this.productService.getAll().valueChanges();
+   // this.products$ = this.productService.getAll().valueChanges();
+   this.products$=this.productService.getAll();
+   //this.logProducts();
+  }
+
+
+
+  logProducts(){
+    this.products$.forEach(element => {
+      console.log(element);
+    });
   }
 
   ngOnInit() {}

@@ -1,11 +1,12 @@
 import { Observable } from "rxjs";
-import { AngularFireList } from "@angular/fire/database";
+import { AppProduct } from "./../../../models/app-product";
 import { ProductService } from "./../../../services/product.service";
 import { CategoryService } from "./../../../services/category.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { take } from "rxjs/operators";
 import { map } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-product-form",
@@ -14,7 +15,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class ProductFormComponent implements OnInit {
   categories$;
-  product = {};
+  product = new AppProduct();
+  id;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +25,7 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService
   ) {
     //this.categories$ = this.categoryService.getCategories().valueChanges();
+
     this.categories$ = this.categoryService
       .getCategories()
       .snapshotChanges()
@@ -31,30 +34,45 @@ export class ProductFormComponent implements OnInit {
           categories.map(a => {
             const key = a.key;
             const name = a.payload.child("name").val();
-            console.log({ key, name });
             return { key, name };
           })
         )
       );
 
-    /*
-    let id=this.route.snapshot.paramMap.get('id');
-    console.log(id);
-    if(id) this.productService.getProduct(id).snapshotChanges().pipe(take(1)).subscribe(p=>this.product=p);
-    */
+    this.id = this.route.snapshot.paramMap.get("id");
+    console.log(this.id);
+    if (this.id) {
+      this.productService
+        .getProduct(this.id)
+        .snapshotChanges()
+        .pipe(take(1))
+        .subscribe(p => {
+          this.product.title = p.payload.child("title").val();
+          this.product.imageUrl = p.payload.child("imageUrl").val();
+          this.product.price = p.payload.child("price").val();
+          this.product.category = p.payload.child("category").val();
+        });
+    }
+    this.logprod();
   }
 
   ngOnInit() {}
 
   save(product) {
-    console.log(product);
-    this.productService.create(product);
+    if (this.id) {
+      this.productService.update(this.id, product);
+    } else {
+      this.productService.create(product);
+    }
+
     this.router.navigate(["/admin/products"]);
   }
 
+  logprod() {
+    console.log(this.product);
+  }
+
   logCat() {
-    this.categories$.forEach(category => {
-      console.log(category);
-    });
+    this.categories$.forEach(category => {});
   }
 }
