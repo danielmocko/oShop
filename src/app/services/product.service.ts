@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { Product } from './../components/admin/admin-products/admin-products.component';
 import { map, take } from 'rxjs/operators';
 import { AppProduct } from './../models/app-product';
 import { AngularFireList } from "@angular/fire/database";
@@ -15,10 +17,28 @@ export class ProductService {
     return this.db.list("/products").push(product);
   }
 
-  getAll() {
+  getAll():Observable<Product[]> {
     return this.db.list("/products").snapshotChanges().pipe(
       map(products=>products.map(p=>{
        let product =new AppProduct();
+       product.key = p.key;
+       product.title=p.payload.child('title').val();
+       product.imageUrl=p.payload.child('imageUrl').val();
+       product.price=p.payload.child('price').val();
+       product.category=p.payload.child('category').val();
+ 
+       return product;
+      }))) ;
+  }
+
+  getProducts(){
+    return this.db.list("/products");
+  }
+
+  getAllProducts(){
+    return this.db.list("/products").snapshotChanges().pipe(
+      map(products=>products.map(p=>{
+       let product:Product;
        product.key = p.key;
        product.title=p.payload.child('title').val();
        product.imageUrl=p.payload.child('imageUrl').val();
