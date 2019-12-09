@@ -58,6 +58,21 @@ export class ProductService {
   } 
   delete(prodictId){
     return this.db.object('/products/'+prodictId).remove();
-  }      
+  }   
+  
+  getProductsByCategories(category){
+    return this.db.list('/products/').query.orderByChild('category').equalTo(category)
+    /*
+    .on('child_added',function(snapshot){
+      let product = new AppProduct()
+      product.key=snapshot.key;
+      product.category=snapshot.child('category').val();
+      product.imageUrl=snapshot.child('imageurl').val();
+      product.price=snapshot.child('price').val();
+      product.title=snapshot.child('titiel').val();
+      console.log(product)
+      return product
+    });*/
+  }
 
 }
