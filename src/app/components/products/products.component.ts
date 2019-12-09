@@ -1,29 +1,29 @@
 import { ShoppingCartService } from './../../services/shopping-cart.service';
 import { AppProduct } from "./../../models/app-product";
-
 import { ActivatedRoute } from "@angular/router";
-import { map, switchMap } from "rxjs/operators";
-import { CategoryService } from "./../../services/category.service";
 import { ProductService } from "./../../services/product.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,OnDestroy } from "@angular/core";
 import { Product } from "../admin/admin-products/admin-products.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-products",
   templateUrl: "./products.component.html",
   styleUrls: ["./products.component.css"]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   filterCategories: AppProduct[] = [];
   products: Product[] = [];
   filteredProducts: any;
-  categories$;
   category: string;
+  shoppingCart;
+  subscription:Subscription;
+  cartId:any;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private categoryService: CategoryService,
+   
     private cartService:ShoppingCartService
   ) {
     this.productService
@@ -40,19 +40,6 @@ export class ProductsComponent implements OnInit {
           this.products.push(product);
         });
       });
-
-    this.categories$ = this.categoryService
-      .getAll()
-      .snapshotChanges()
-      .pipe(
-        map(categories =>
-          categories.map(a => {
-            const key = a.key;
-            const name = a.payload.child("name").val();
-            return { key, name };
-          })
-        )
-      );
 
     this.route.queryParamMap.subscribe(params => {
       this.category = params.get("category");
@@ -76,11 +63,19 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(product:Product){
-
     this.cartService.addToCart(product);
-
-    
+  }
+/*
+  getQuantity(){
+   return this.cartId;
+  }
+*/
+  async ngOnInit() {
+    //this.subscription= (await this.cartService.getCart()).snapshotChanges().subscribe(cart=>console.log(cart.payload.child('items'))
+  }
+  
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 
-  ngOnInit() {}
 }

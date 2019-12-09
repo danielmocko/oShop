@@ -34,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
+import { ProductFilterComponent } from './components/products/product-filter/product-filter.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatInputModule} from '@angular/material/input';
     AdminOrdersComponent,
     LoginComponent,
     BsNavbarComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ProductFilterComponent
   ],
   imports: [
     BrowserModule,
