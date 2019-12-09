@@ -24,8 +24,6 @@ export class ProductFormComponent implements OnInit {
     private categoryService: CategoryService,
     private productService: ProductService
   ) {
-    //this.categories$ = this.categoryService.getCategories().valueChanges();
-
     this.categories$ = this.categoryService
       .getAll()
       .snapshotChanges()
@@ -52,8 +50,7 @@ export class ProductFormComponent implements OnInit {
           this.product.price = p.payload.child("price").val();
           this.product.category = p.payload.child("category").val();
         });
-    }
-    this.logprod();
+      }
   }
 
   ngOnInit() {}
@@ -73,15 +70,5 @@ export class ProductFormComponent implements OnInit {
 
     this.productService.delete(this.id);
     this.router.navigate(["/admin/products"]);
-    
-    
-  }
-
-  logprod() {
-    console.log(this.product);
-  }
-
-  logCat() {
-    this.categories$.forEach(category => {});
   }
 }

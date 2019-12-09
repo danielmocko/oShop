@@ -35,6 +35,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import { ProductFilterComponent } from './components/products/product-filter/product-filter.component';
+import { ProductCartComponent } from './components/product-cart/product-cart.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ProductFilterComponent } from './components/products/product-filter/pro
     LoginComponent,
     BsNavbarComponent,
     ProductFormComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductCartComponent
   ],
   imports: [
     BrowserModule,

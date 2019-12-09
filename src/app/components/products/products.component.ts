@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: "./products.component.html",
   styleUrls: ["./products.component.css"]
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit {
   filterCategories: AppProduct[] = [];
   products: Product[] = [];
   filteredProducts: any;
@@ -23,7 +23,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-   
     private cartService:ShoppingCartService
   ) {
     this.productService
@@ -53,8 +52,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
             product.category = snapshot.child("category").val();
             product.imageUrl = snapshot.child("imageUrl").val();
             product.price = snapshot.child("price").val();
-            product.title = snapshot.child("titiel").val();
+            product.title = snapshot.child("title").val();
             this.filterCategories.push(product);
+            console.log(this.filterCategories)
           });
       } else {
         this.filterCategories = this.products;
@@ -65,17 +65,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   addToCart(product:Product){
     this.cartService.addToCart(product);
   }
-/*
-  getQuantity(){
-   return this.cartId;
-  }
-*/
-  async ngOnInit() {
-    //this.subscription= (await this.cartService.getCart()).snapshotChanges().subscribe(cart=>console.log(cart.payload.child('items'))
+
+  ngOnInit() {
   }
   
-  ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
+  
 
 }
