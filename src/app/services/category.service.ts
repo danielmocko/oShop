@@ -10,7 +10,7 @@ export class CategoryService {
 
   }
 
-  getCategories()  {
+  getAll()  {
     //ref=> ref.orderByValue()
     return this.db.list('/categories');
   }

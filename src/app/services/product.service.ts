@@ -38,7 +38,7 @@ export class ProductService {
   getAllProducts(){
     return this.db.list("/products").snapshotChanges().pipe(
       map(products=>products.map(p=>{
-       let product:Product;
+       let product=new AppProduct()
        product.key = p.key;
        product.title=p.payload.child('title').val();
        product.imageUrl=p.payload.child('imageUrl').val();

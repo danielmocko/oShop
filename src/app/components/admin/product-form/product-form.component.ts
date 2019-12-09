@@ -27,7 +27,7 @@ export class ProductFormComponent implements OnInit {
     //this.categories$ = this.categoryService.getCategories().valueChanges();
 
     this.categories$ = this.categoryService
-      .getCategories()
+      .getAll()
       .snapshotChanges()
       .pipe(
         map(categories =>

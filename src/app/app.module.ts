@@ -65,6 +65,7 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
 
     RouterModule.forRoot([
+      { path:"",component:ProductsComponent},
       { path: "home", component: HomeComponent },
       { path: "products", component: ProductsComponent },
       { path: "shopping-cart", component: ShoppingCartComponent },

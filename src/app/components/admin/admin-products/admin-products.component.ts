@@ -20,6 +20,7 @@ export interface Product {
   templateUrl: "./admin-products.component.html",
   styleUrls: ["./admin-products.component.css"]
 })
+
 export class AdminProductsComponent implements OnInit {
   dataSource: MatTableDataSource<Product>;
   products:Product[]
@@ -31,7 +32,7 @@ export class AdminProductsComponent implements OnInit {
 
   constructor(private productService:ProductService){
    this.productService.getAll().subscribe((data:Product[])=>{
-     this.dataSource.data=this.products=data;
+     this.dataSource.data=data;
    })
       
    this.dataSource= new MatTableDataSource();
