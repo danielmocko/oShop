@@ -1,3 +1,4 @@
+import { ShoppingCartService } from './services/shopping-cart.service';
 import { MatTableModule } from '@angular/material/table';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
@@ -89,7 +90,8 @@ import {MatInputModule} from '@angular/material/input';
     AuthGuardService,
     AdminAuthGuardService,
     CategoryService,
-    ProductService
+    ProductService,
+    ShoppingCartService
   ],
   bootstrap: [AppComponent]
 })
