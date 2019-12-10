@@ -1,5 +1,5 @@
+import { Product } from './../components/admin/admin-products/admin-products.component';
 import { take } from 'rxjs/operators';
-import { Product } from '../components/admin/admin-products/admin-products.component';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
 
@@ -32,19 +32,26 @@ export class ShoppingCartService {
 
     return cartId;
   }
-  
+
   private getItem(cartId:string,productId:string){
     return this.db.object('/shopping-carts/'+cartId+'/items/'+productId);
   }
 
   async addToCart(product:Product){
-    console.log(product)
+    this.updateItemQuantity(product,1);
+  }
+
+  async removeFromCart(product:Product){
+    this.updateItemQuantity(product,-1);
+  }
+
+  private async updateItemQuantity(product:Product, change: number){
     let cartId =await this.getOrCreateCartId();
     let item$= this.getItem(cartId,product.key)
 
     item$.snapshotChanges().pipe(take(1)).subscribe(item=>{
       let items=item.payload.child('quantity').val();
-      item$.update({product:product,quantity:(items || 0)+1});
+      item$.update({product:product,quantity:(items || 0) + change});
     });
   }
 }
