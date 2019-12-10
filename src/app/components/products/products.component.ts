@@ -1,3 +1,6 @@
+import { take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { snapshotChanges } from '@angular/fire/database';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { AppProduct } from "./../../models/app-product";
 import { ActivatedRoute } from "@angular/router";
@@ -11,12 +14,11 @@ import { Subscription } from 'rxjs';
   templateUrl: "./products.component.html",
   styleUrls: ["./products.component.css"]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   filterCategories: AppProduct[] = [];
   products: Product[] = [];
   filteredProducts: any;
   category: string;
-  shoppingCart;
   subscription:Subscription;
   cartId:any;
 
@@ -62,9 +64,14 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.subscription=(await this.cartService.getCart()).valueChanges().subscribe(carts=>{
+      this.cartId=carts
+    });
+    
   }
-  
-  
 
+  ngOnDestroy(){
+   this.subscription.unsubscribe();
+  }
 }
