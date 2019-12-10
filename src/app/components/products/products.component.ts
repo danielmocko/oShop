@@ -1,4 +1,4 @@
-import { ShoppingCartService } from './../../services/shopping-cart.service';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { AppProduct } from "./../../models/app-product";
 import { ActivatedRoute } from "@angular/router";
 import { ProductService } from "./../../services/product.service";
@@ -60,10 +60,6 @@ export class ProductsComponent implements OnInit {
         this.filterCategories = this.products;
       }
     });
-  }
-
-  addToCart(product:Product){
-    this.cartService.addToCart(product);
   }
 
   ngOnInit() {
