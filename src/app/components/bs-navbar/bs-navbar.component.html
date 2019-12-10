@@ -21,7 +21,9 @@
           tabindex="-1"
           aria-disabled="true"
           routerLink="/shopping-cart"
-          >Shopping Cart</a
+          >Shopping Cart 
+          <span class="badge badge-warning badge-pill"> {{ shoppingCartItemCount }}</span>
+          </a
         >
       </li>
       <ng-template #anonymousUser>
