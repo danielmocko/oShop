@@ -6,7 +6,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { take } from "rxjs/operators";
 import { map } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-product-form",

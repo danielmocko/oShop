@@ -1,3 +1,7 @@
+
+
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { AngularFireObject } from '@angular/fire/database';
 import { Product } from './../components/admin/admin-products/admin-products.component';
 import { take } from 'rxjs/operators';
@@ -17,6 +21,12 @@ export class ShoppingCartService {
       dateCreated:new Date().getTime()
     })
   }
+
+  async getCartO():Promise<AngularFireObject<ShoppingCart>>{
+    let cartId= await this.getOrCreateCartId();
+    return this.db.object('/shopping-carts/'+cartId);
+   
+  }      
 
   async getCart():Promise<AngularFireObject<ShoppingCart>>{
     let cartId= await this.getOrCreateCartId();
