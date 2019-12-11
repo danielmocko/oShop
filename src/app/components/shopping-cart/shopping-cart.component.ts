@@ -18,4 +18,8 @@ export class ShoppingCartComponent implements OnInit {
     this.cart$= (await this.shoppingCartService.getCart()).snapshotChanges().pipe(map(x=>new ShoppingCart(x.payload.child('items').val())))
   }
 
+  clearCart(){
+    this.shoppingCartService.clearCart()
+  }
+
 }

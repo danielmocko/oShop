@@ -1,3 +1,4 @@
+import { Product } from './../components/admin/admin-products/admin-products.component';
 
 import { ShoppingCartItem } from "./shopping-cart-item";
 
@@ -6,10 +7,18 @@ export class ShoppingCart {
 
     
   constructor(public itemsMap: { [productId:string]:ShoppingCartItem}) {
+    this.itemsMap = itemsMap || {};
+
     for(let productId in itemsMap){
       let item = itemsMap[productId];
       this.items.push(new ShoppingCartItem(item.product,item.quantity));
     }
+  }
+
+  getQuantity(product:Product){
+    let item = this.itemsMap[product.key];
+    //console.log(item.quantity)
+    return item? item.quantity : 0;   
   }
 
   get totalPrice(){

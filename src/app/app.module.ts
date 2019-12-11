@@ -36,6 +36,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import { ProductFilterComponent } from './components/products/product-filter/product-filter.component';
 import { ProductCartComponent } from './components/product-cart/product-cart.component';
+import { ProductQuantityComponent } from './components/product-quantity/product-quantity.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ProductCartComponent } from './components/product-cart/product-cart.com
     BsNavbarComponent,
     ProductFormComponent,
     ProductFilterComponent,
-    ProductCartComponent
+    ProductCartComponent,
+    ProductQuantityComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { snapshotChanges } from '@angular/fire/database';
@@ -8,6 +9,7 @@ import { ProductService } from "./../../services/product.service";
 import { Component, OnInit,OnDestroy } from "@angular/core";
 import { Product } from "../admin/admin-products/admin-products.component";
 import { Subscription } from 'rxjs';
+import { ShoppingCart } from 'src/app/models/shopping-cart';
 
 @Component({
   selector: "app-products",
@@ -61,6 +63,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
       } else {
         this.filterCategories = this.products;
       }
+      
+      
     });
   }
 
@@ -68,7 +72,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.subscription=(await this.cartService.getCart()).valueChanges().subscribe(carts=>{
       this.cartId=carts
     });
-    
   }
 
   ngOnDestroy(){
